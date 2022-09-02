@@ -115,4 +115,52 @@ class ApiController extends Controller
         return "CREATED";
     }
 
+       /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+
+    /**
+     * @OA\Get(
+     *      path="/api/posts/{post_id}",
+     *      operationId="getPostById",
+     *      tags={"posts"},
+     *      summary="Get post information",
+     *      description="Returns post data",
+     *      @OA\Parameter(
+     *          name="post_id",
+     *          description="Post id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+    public function show($id)
+    {
+        return Post::find($id);
+    }
+
 }
