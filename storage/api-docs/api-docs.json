@@ -1,0 +1,337 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Get list of posts",
+                "description": "Returns list of posts",
+                "operationId": "displayPosts",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Store new post",
+                "description": "",
+                "operationId": "storePost",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "excerpt",
+                                    "body",
+                                    "category_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "example title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "example": "example-slug"
+                                    },
+                                    "thumbnail": {
+                                        "type": "file",
+                                        "example": "filename"
+                                    },
+                                    "excerpt": {
+                                        "type": "string",
+                                        "example": "this is the excerpt of the post"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "here is the body of the post"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/posts/{post_id}": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Get post information",
+                "description": "Returns post data",
+                "operationId": "getPostById",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "Post id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Update existing post",
+                "description": "Returns updated project data",
+                "operationId": "updatePost",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "post id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "excerpt",
+                                    "body",
+                                    "category_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "example title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "example": "example-slug"
+                                    },
+                                    "thumbnail": {
+                                        "type": "file",
+                                        "example": "filename"
+                                    },
+                                    "excerpt": {
+                                        "type": "string",
+                                        "example": "this is the excerpt of the post"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "here is the body of the post"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Delete existing post",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deletePost",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "Post id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Post": {
+                "title": "Post",
+                "description": "Post model",
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Title of the post",
+                        "type": "string",
+                        "example": "A nice project"
+                    },
+                    "slug": {
+                        "title": "slug",
+                        "description": "Slug of the new post",
+                        "type": "string",
+                        "example": "This is new slug"
+                    },
+                    "excerpt": {
+                        "title": "excerpt",
+                        "description": "excerpt of the new post",
+                        "type": "string",
+                        "example": "This is new excerpt"
+                    },
+                    "body": {
+                        "title": "body",
+                        "description": "body of the new post",
+                        "type": "string",
+                        "example": "This is new body"
+                    },
+                    "thumbnail": {
+                        "title": "thumbnail",
+                        "description": "thumbnail of the new post",
+                        "type": "string",
+                        "example": "This is new thumbnail"
+                    },
+                    "category_id": {
+                        "title": "category_id",
+                        "description": "category id for the post",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "description": "user id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Post"
+                }
+            }
+        }
+    }
+}
