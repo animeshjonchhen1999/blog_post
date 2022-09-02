@@ -163,4 +163,82 @@ class ApiController extends Controller
         return Post::find($id);
     }
 
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     */
+/**
+     * @OA\Put(
+     *      path="/api/posts/{post_id}",
+     *      operationId="updatePost",
+     *      tags={"posts"},
+     *      summary="Update existing post",
+     *      description="Returns updated project data",
+     *      @OA\Parameter(
+     *          name="post_id",
+     *          description="post id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     * @OA\JsonContent(
+     *       required={"title","slug","excerpt", "body", "category_id", "user_id"},
+     *       @OA\Property(property="title", type="string", example="example title"),
+     *       @OA\Property(property="slug", type="string",example="example-slug"),
+     *       @OA\Property(property="thumbnail", type="file", example="filename"),
+     *       @OA\Property(property="excerpt", type="string", example="this is the excerpt of the post"),
+     *       @OA\Property(property="body", type="string", example="here is the body of the post"),
+     *       @OA\Property(property="category_id", type="integer", example="1"),
+     *       @OA\Property(property="user_id", type="integer", example="1"),          
+     *      ),
+     * ),
+     *      @OA\Response(
+     *          response=202,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
+    public function update($id)
+    {
+        $attributes = request()->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore(Post::find($id))],
+            'thumbnail' => 'image',
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+        ]);
+
+        if (isset($attributes['thumbnail'])){
+            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        }
+
+        Post::find($id)->update($attributes);
+
+        return ("updated");
+    }
+
+
 }
