@@ -44,4 +44,75 @@ class ApiController extends Controller
     {
         return new JsonResponse(Post::all());
     }
+
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+
+
+     /**
+     * @OA\Post(
+     *      path="/api/posts",
+     *      operationId="storePost",
+     *      tags={"posts"},
+     *      summary="Store new post",
+     *      description="",
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"title","slug","excerpt", "body", "category_id", "user_id"},
+     *       @OA\Property(property="title", type="string", example="example title"),
+     *       @OA\Property(property="slug", type="string",example="example-slug"),
+     *       @OA\Property(property="thumbnail", type="file", example="filename"),
+     *       @OA\Property(property="excerpt", type="string", example="this is the excerpt of the post"),
+     *       @OA\Property(property="body", type="string", example="here is the body of the post"),
+     *       @OA\Property(property="category_id", type="integer", example="1"),
+     *       @OA\Property(property="user_id", type="integer", example="1"),
+     * 
+     * 
+     *    ),
+     * ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Post")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+    public function store(Request $request)
+    {
+        $attributes = [
+            'title' => request('title'),
+            'slug' => Str::slug($request->title,'-'),
+            'excerpt' => request('excerpt'),
+            'thumbnail' => request()->file('thumbnail'),
+            'body' => request('body'),
+            'user_id' => request('user_id'),
+            'category_id' => request('category_id')
+        ];
+
+        Post::create($attributes);
+
+        return "CREATED";
+    }
+
 }
