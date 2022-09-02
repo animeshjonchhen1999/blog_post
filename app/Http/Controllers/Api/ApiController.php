@@ -240,5 +240,55 @@ class ApiController extends Controller
         return ("updated");
     }
 
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+
+
+     /**
+     * @OA\Delete(
+     *      path="/api/posts/{post_id}",
+     *      operationId="deletePost",
+     *      tags={"posts"},
+     *      summary="Delete existing post",
+     *      description="Deletes a record and returns no content",
+     *      @OA\Parameter(
+     *          name="post_id",
+     *          description="Post id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
+    public function destroy($id)
+    {
+        Post::Find($id)->delete();
+
+        return ("sucessed to delete");
+    }
 
 }
